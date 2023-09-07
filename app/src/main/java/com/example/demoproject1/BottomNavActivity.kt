@@ -7,7 +7,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.demoproject1.databinding.ActivityBottomNavBinding
 import com.google.android.material.bottomappbar.BottomAppBarTopEdgeTreatment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BottomNavActivity : AppCompatActivity() {
 
     private  lateinit var binding: ActivityBottomNavBinding
