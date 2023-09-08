@@ -5,11 +5,16 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.demoproject1.databinding.ActivityBottomNavBinding
+import com.example.demoproject1.db.ContactDatabase
+import com.example.demoproject1.models.Contact
 import com.google.android.material.bottomappbar.BottomAppBarTopEdgeTreatment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
+
 class BottomNavActivity : AppCompatActivity() {
 
     private  lateinit var binding: ActivityBottomNavBinding
@@ -20,7 +25,11 @@ class BottomNavActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityBottomNavBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        val database = ContactDatabase.getDatabase(this).getContactDao()
+        val contact = Contact(0,"Ali","lal", "123")
+        CoroutineScope(Dispatchers.IO).launch {
+            database.upsertContact(contact)
+        }
         bottomNav = binding.bottomNavigationView
         adapter = PagerAdapter(supportFragmentManager, lifecycle)
         viewPager2 = binding.ViewPager

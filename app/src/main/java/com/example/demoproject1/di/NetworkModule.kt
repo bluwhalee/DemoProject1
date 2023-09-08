@@ -11,19 +11,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-@InstallIn(SingletonComponent::class)
-@Module
-class NetworkModule {
-    @Singleton
-    @Provides
+
+object NetworkModule {
+
     fun getRetrofit():Retrofit{
         return Retrofit.Builder().baseUrl(BASE_URl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-    @Singleton
-    @Provides
-    fun getNewsApi(retrofit: Retrofit) : NewsApi{
-        return retrofit.create(NewsApi::class.java)
-    }
+
 }

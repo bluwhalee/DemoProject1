@@ -8,8 +8,8 @@ import com.example.demoproject1.retrofit.NewsApi
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
-class NewsRepository @Inject constructor(val  newsApi: NewsApi) {
+
+class NewsRepository (val  newsApi: NewsApi) {
 
     fun getNews() = Pager(
         config = PagingConfig(pageSize = 10, maxSize = 100),

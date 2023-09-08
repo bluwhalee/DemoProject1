@@ -56,6 +56,15 @@ dependencies {
     implementation ("androidx.paging:paging-runtime-ktx:3.2.1")
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
+
+    val roomVersion = "2.5.2"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:$roomVersion")
+
 }
 kapt {
     correctErrorTypes = true

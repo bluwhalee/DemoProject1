@@ -22,7 +22,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [FirstFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-@AndroidEntryPoint
+
 class FirstFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -49,7 +49,10 @@ class FirstFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.recyclerView)
         adapter =  NewsPagingAdapter()
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+        val newsRepository = (requireActivity().application as MainApplication).newsRepository
+        val contactRepository = (requireActivity().application as MainApplication).contactRepository
+        mainViewModel = ViewModelProvider(this,MainViewModelFactory(newsRepository,contactRepository)).get(MainViewModel::class.java)
 
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
