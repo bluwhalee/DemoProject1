@@ -39,7 +39,7 @@ class NewsPagingAdapter: PagingDataAdapter<Article, NewsPagingAdapter.NewsViewHo
 
         holder.newsTitle.text = article?.title
         holder.newsDescription.text = article?.description
-        //Glide.with(MainApplication.applicationContext()).load(article?.urlToImage).into(holder.newsImage)
+        Glide.with(MainApplication.applicationContext()).load(article?.urlToImage).into(holder.newsImage)
         holder.itemView.setOnClickListener{
             //Toast.makeText(MainApplication.instance?.applicationContext,article?.title,Toast.LENGTH_SHORT).show()
         }

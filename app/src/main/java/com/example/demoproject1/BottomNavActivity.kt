@@ -25,11 +25,7 @@ class BottomNavActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityBottomNavBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val database = ContactDatabase.getDatabase(this).getContactDao()
-        val contact = Contact(0,"Ali","lal", "123")
-        CoroutineScope(Dispatchers.IO).launch {
-            database.upsertContact(contact)
-        }
+
         bottomNav = binding.bottomNavigationView
         adapter = PagerAdapter(supportFragmentManager, lifecycle)
         viewPager2 = binding.ViewPager
