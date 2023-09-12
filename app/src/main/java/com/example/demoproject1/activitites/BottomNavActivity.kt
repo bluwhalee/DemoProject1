@@ -1,18 +1,12 @@
-package com.example.demoproject1
+package com.example.demoproject1.activitites
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.example.demoproject1.paging.PagerAdapter
+import com.example.demoproject1.R
 import com.example.demoproject1.databinding.ActivityBottomNavBinding
-import com.example.demoproject1.db.ContactDatabase
-import com.example.demoproject1.models.Contact
-import com.google.android.material.bottomappbar.BottomAppBarTopEdgeTreatment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 class BottomNavActivity : AppCompatActivity() {

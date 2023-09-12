@@ -1,9 +1,12 @@
-package com.example.demoproject1
+package com.example.demoproject1.paging
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.demoproject1.fragments.FirstFragment
+import com.example.demoproject1.fragments.SecondFragment
+import com.example.demoproject1.fragments.ThirdFragment
 
 class PagerAdapter(
     fragmentManager: FragmentManager,
@@ -15,9 +18,9 @@ class PagerAdapter(
 
     override fun createFragment(position: Int): Fragment {
         return when(position){
-            0->FirstFragment()
-            1->SecondFragment()
-            2->ThirdFragment()
+            0-> FirstFragment()
+            1-> SecondFragment()
+            2-> ThirdFragment()
             else-> FirstFragment()
         }
     }

@@ -1,16 +1,13 @@
-package com.example.demoproject1
+package com.example.demoproject1.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.example.demoproject1.db.ContactDatabase
 import com.example.demoproject1.models.Contact
 import com.example.demoproject1.repository.ContactRepository
 import com.example.demoproject1.repository.NewsRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -33,6 +30,6 @@ class MainViewModel (private val newsRepository: NewsRepository,private val cont
 
 class MainViewModelFactory(private val newsRepository: NewsRepository,private val contactRepository: ContactRepository): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MainViewModel(newsRepository,contactRepository)as T
+        return MainViewModel(newsRepository,contactRepository) as T
     }
 }
