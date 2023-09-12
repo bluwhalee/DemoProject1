@@ -1,14 +1,14 @@
-package com.example.demoproject1.models
+package com.example.demoproject1.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demoproject1.R
+import com.example.demoproject1.models.Contact
 
 class contactAdapter (val context: Context, private val listener: IContactRVAapter): RecyclerView.Adapter<contactAdapter.ContactViewHolder>(){
 

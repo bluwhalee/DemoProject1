@@ -22,8 +22,7 @@ import com.example.demoproject1.models.Contact
         private var INSTANCE: ContactDatabase? = null
 
         fun getDatabase(context: Context): ContactDatabase {
-            // if the INSTANCE is not null, then return it,
-            // if it is, then create the database
+            //Singleton
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
