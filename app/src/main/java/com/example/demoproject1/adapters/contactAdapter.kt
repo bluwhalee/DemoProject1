@@ -24,8 +24,11 @@ class contactAdapter (val context: Context, private val listener: IContactRVAapt
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         val currentContact = allContact[position]
-        holder.contactName.text = "${currentContact.firstName} ${currentContact.lastName}"
-        holder.contactNumber.text = currentContact.phoneNumber
+        holder.apply {
+            contactName.text = "${currentContact.firstName} ${currentContact.lastName}"
+            contactNumber.text = currentContact.phoneNumber
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -33,6 +36,7 @@ class contactAdapter (val context: Context, private val listener: IContactRVAapt
     }
 
     inner class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+
         val contactName = itemView.findViewById<TextView>(R.id.contactName)
         val contactNumber = itemView.findViewById<TextView>(R.id.contactNumber)
         val deleteIcon = itemView.findViewById<ImageView>(R.id.deleteIcon)

@@ -12,18 +12,18 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.example.demoproject1.MainApplication
 import com.example.demoproject1.viewmodel.MainViewModel
-import com.example.demoproject1.viewmodel.MainViewModelFactory
 import com.example.demoproject1.R
 import com.example.demoproject1.adapters.NewsPagingAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class FirstFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: NewsPagingAdapter
+    private lateinit var paggingAdapter: NewsPagingAdapter
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,24 +36,27 @@ class FirstFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_first, container, false)
-
-        recyclerView = view.findViewById(R.id.recyclerView)
-        adapter = NewsPagingAdapter()
-
-        val newsRepository = (requireActivity().application as MainApplication).newsRepository
-        val contactRepository = (requireActivity().application as MainApplication).contactRepository
-        mainViewModel = ViewModelProvider(
-            this,
-            MainViewModelFactory(newsRepository, contactRepository)
-        ).get(MainViewModel::class.java)
-
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.adapter = adapter
-        mainViewModel.list.observe(viewLifecycleOwner, Observer {
-            adapter.submitData(lifecycle, it)
-        })
+        setRecycler(view)
         return view
+    }
+    fun setRecycler(view: View){
+        recyclerView = view.findViewById(R.id.recyclerView)
+        paggingAdapter = NewsPagingAdapter()
+
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            recyclerView.setHasFixedSize(true)
+            adapter = paggingAdapter
+        }
+
+        mainViewModel.list.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                paggingAdapter.submitData(lifecycle, it)
+            }
+
+        })
     }
 
     companion object {

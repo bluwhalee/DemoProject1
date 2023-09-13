@@ -7,7 +7,10 @@ import com.example.demoproject1.models.Contact
 import javax.inject.Inject
 import javax.inject.Singleton
 
-class ContactRepository (private val contactDatabase: ContactDatabase) {
+@Singleton
+class ContactRepository @Inject constructor (
+    private val contactDatabase: ContactDatabase
+) {
 
     val allContacts: LiveData<List<Contact>> = contactDatabase.getContactDao().getContacts()
     suspend fun insert(contact: Contact)
