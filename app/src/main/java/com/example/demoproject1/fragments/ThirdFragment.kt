@@ -19,10 +19,6 @@ class ThirdFragment : Fragment() {
 
     private lateinit var binding: FragmentThirdBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,11 +36,11 @@ class ThirdFragment : Fragment() {
         }
         binding = FragmentThirdBinding.inflate(layoutInflater)
         binding.apply {
-            btnUpload.setOnClickListener{
+            btnUpdate.setOnClickListener{
                 galleryLauncher.launch("image/*")
             }
             btnDownload.setOnClickListener{
-                val url = binding.etURL.text.toString()
+                val url = binding.edtUrl.text.toString()
                 val downloadManager = requireActivity().getSystemService(DownloadManager::class.java)
                 val request = DownloadManager.Request(url.toUri())
                     .setMimeType("image/*")
@@ -57,9 +53,4 @@ class ThirdFragment : Fragment() {
         return binding.root
     }
 
-    companion object {
-
-        fun newInstance(param1: String, param2: String) =
-            ThirdFragment().apply {}
-    }
 }

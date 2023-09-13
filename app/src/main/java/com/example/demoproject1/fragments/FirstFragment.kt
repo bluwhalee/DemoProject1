@@ -9,8 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
-import com.example.demoproject1.MainApplication
 import com.example.demoproject1.viewmodel.MainViewModel
 import com.example.demoproject1.R
 import com.example.demoproject1.adapters.NewsPagingAdapter
@@ -18,17 +16,27 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FirstFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    // viewbinding or databinding
 
-    private lateinit var recyclerView: RecyclerView
+    // region properties
     private lateinit var paggingAdapter: NewsPagingAdapter
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var recyclerView : RecyclerView
+    // end region
 
+    // region lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
+    // end region
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,14 +44,18 @@ class FirstFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_first, container, false)
+        init()
         setRecycler(view)
         return view
     }
-    fun setRecycler(view: View){
-        recyclerView = view.findViewById(R.id.recyclerView)
-        paggingAdapter = NewsPagingAdapter()
 
-        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+    // region private methods
+    private fun init(){
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        paggingAdapter = NewsPagingAdapter()
+    }
+    private fun setRecycler(view: View){
+        recyclerView = view.findViewById<RecyclerView>(R.id.news_recyclerview)
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -57,13 +69,10 @@ class FirstFragment : Fragment() {
             }
 
         })
+        // observe each live data in separate methods
     }
 
-    companion object {
+    // end region
 
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FirstFragment().apply {}
-    }
+    // region callbacks
 }

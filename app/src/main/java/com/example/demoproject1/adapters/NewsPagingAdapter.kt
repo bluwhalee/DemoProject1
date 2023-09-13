@@ -16,9 +16,9 @@ import com.example.demoproject1.models.Article
 class NewsPagingAdapter: PagingDataAdapter<Article, NewsPagingAdapter.NewsViewHolder>(COMPARATOR) {
 
     class NewsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        var newsImage = itemView.findViewById<ImageView>(R.id.newsImage)
-        var newsTitle = itemView.findViewById<TextView>(R.id.newsTitle)
-        var newsDescription = itemView.findViewById<TextView>(R.id.newsDescription)
+        var newsImage = itemView.findViewById<ImageView>(R.id.news_image)
+        var newsTitle = itemView.findViewById<TextView>(R.id.news_title)
+        var newsDescription = itemView.findViewById<TextView>(R.id.news_description)
     }
 
     companion object{

@@ -1,4 +1,10 @@
 package com.example.demoproject1.models
 
-data class Article(val author: String, val title: String, val description: String, val url: String, val urlToImage: String) {
+data class Article(
+    val author: String,
+    val title: String,
+    val description: String,
+    val url: String,
+    val urlToImage: String
+) {
 }

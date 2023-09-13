@@ -13,20 +13,18 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.demoproject1.MainApplication
+import com.bumptech.glide.Glide.init
 import com.example.demoproject1.viewmodel.MainViewModel
 import com.example.demoproject1.R
 import com.example.demoproject1.databinding.ContactDialogBinding
 import com.example.demoproject1.databinding.FragmentSecondBinding
 import com.example.demoproject1.models.Contact
-import com.example.demoproject1.adapters.IContactRVAapter
-import com.example.demoproject1.adapters.contactAdapter
+import com.example.demoproject1.adapters.ContactItemClickListener
+import com.example.demoproject1.adapters.ContactAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SecondFragment : Fragment() , IContactRVAapter {
+class SecondFragment : Fragment() , ContactItemClickListener {
 
     lateinit var binding: FragmentSecondBinding
     lateinit var dialogBinding: ContactDialogBinding
@@ -44,8 +42,8 @@ class SecondFragment : Fragment() , IContactRVAapter {
         binding = FragmentSecondBinding.inflate(layoutInflater)
         dialogBinding = ContactDialogBinding.inflate(layoutInflater)
 
-        val recyclerAdapter = contactAdapter(requireContext(), this)
-        binding.recyclerview.apply {
+        val recyclerAdapter = ContactAdapter(requireContext(), this)
+        binding.contactRecyclerview.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = recyclerAdapter
         }
@@ -53,13 +51,18 @@ class SecondFragment : Fragment() , IContactRVAapter {
         setViewModel(recyclerAdapter)
 
 
-        binding.fab.setOnClickListener{
+        binding.contactFAB.setOnClickListener{
             setDialog()
         }
+        init()
         return binding.root
     }
 
-    private fun setViewModel(recyclerAdapter : contactAdapter) {
+    private fun init(){
+
+    }
+
+    private fun setViewModel(recyclerAdapter : ContactAdapter) {
        viewModel = ViewModelProvider(
            requireActivity()
         ).get(MainViewModel::class.java)
@@ -75,10 +78,10 @@ class SecondFragment : Fragment() , IContactRVAapter {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.contact_dialog)
 
-        dialog.findViewById<Button>(R.id.btnSave).setOnClickListener{
-            var firstName = dialog.findViewById<EditText>(R.id.dgFirstName).text.toString()
-            var lastName = dialog.findViewById<EditText>(R.id.dgLastName).text.toString()
-            var phoneNumber = dialog.findViewById<EditText>(R.id.dgPhoneNumber).text.toString()
+        dialog.findViewById<Button>(R.id.btn_save).setOnClickListener{
+            var firstName = dialog.findViewById<EditText>(R.id.edt_first_name).text.toString()
+            var lastName = dialog.findViewById<EditText>(R.id.edt_last_name).text.toString()
+            var phoneNumber = dialog.findViewById<EditText>(R.id.edt_phone_number).text.toString()
 
             if (firstName!="" || lastName!="" || phoneNumber!="")
             {
@@ -90,19 +93,18 @@ class SecondFragment : Fragment() , IContactRVAapter {
                 Toast.makeText(requireContext(), "Field(s) Empty", Toast.LENGTH_SHORT).show()
             }
         }
-        dialog.findViewById<Button>(R.id.btnCancel).setOnClickListener{
+        dialog.findViewById<Button>(R.id.btn_cancel).setOnClickListener{
             dialog.dismiss()
         }
 
         dialog.show()
+
+            // use databinding or view binding
     }
 
-    override fun omItemClicked(contact: Contact) {
+    // region implemented
+    override fun onItemClicked(contact: Contact) {
         viewModel.delete(contact)
     }
-
-    companion object {
-        fun newInstance(param1: String, param2: String) =
-            SecondFragment().apply {}
-    }
+    // end region
 }
