@@ -27,14 +27,11 @@ object NetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-
-
     @Provides
     @Singleton
     fun getNewsApi(retrofit: Retrofit):NewsApi{
         return retrofit.create(NewsApi::class.java)
     }
-
     @Provides
     @Singleton
     fun provideContactDatabase(@ApplicationContext appContext: Context): ContactDatabase {
@@ -44,10 +41,4 @@ object NetworkModule {
             "contact-database"
         ).build()
     }
-
-//    @Provides
-//    fun provideChannelDao(appDatabase: ContactDatabase): ChannelDao {
-//        return appDatabase.channelDao()
-//    }
-
 }

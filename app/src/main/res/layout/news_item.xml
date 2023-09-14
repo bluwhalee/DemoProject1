@@ -1,43 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_small_medium"
-    android:elevation="@dimen/elavation"
-    >
-    <LinearLayout
-        android:padding="@dimen/padding_small_medium"
-        android:orientation="vertical"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="article"
+            type="com.example.demoproject1.models.Article" />
+    </data>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_small_medium"
+        android:elevation="@dimen/elavation">
 
-        <ImageView
-            android:id="@+id/news_image"
+        <LinearLayout
+            android:padding="@dimen/padding_small_medium"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/news_image_dimen"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_background"
-            />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/news_title"
-            android:layout_marginTop="@dimen/margin_x_small"
-            style="@style/TextAppearance.AppCompat.Headline"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="2"
-            android:ems="10"
-            android:text="TextView" />
+            <ImageView
+                android:id="@+id/news_image"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/news_image_dimen"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_background"
+                app:urlToImage="@{article.urlToImage}"
+                />
 
-        <TextView
-            android:id="@+id/news_description"
-            android:layout_marginTop="@dimen/margin_x_small"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:maxLines="2"
-            android:text="TextView" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/news_title"
+                android:layout_marginTop="@dimen/margin_x_small"
+                style="@style/TextAppearance.AppCompat.Headline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ems="10"
+                android:text="@{article.title}" />
 
-</androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/news_description"
+                android:layout_marginTop="@dimen/margin_x_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:maxLines="2"
+                android:text="@{article.description}" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

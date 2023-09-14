@@ -1,9 +1,12 @@
 package com.example.demoproject1.activitites
 
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
+import com.example.demoproject1.BuildConfig
 import com.example.demoproject1.paging.PagerAdapter
 import com.example.demoproject1.R
 import com.example.demoproject1.databinding.ActivityBottomNavBinding
@@ -14,27 +17,28 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class BottomNavActivity : AppCompatActivity() {
 
+    // region properties
     private  lateinit var binding: ActivityBottomNavBinding
     private lateinit var adapter: PagerAdapter
 
+    // region lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBottomNavBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         initActivity()
         setupBottomNav()
-        setupViewPager()
     }
-    fun initActivity() {
+
+    // region private methods
+    private fun initActivity() {
 
         adapter = PagerAdapter(supportFragmentManager, lifecycle)
         binding.mainViewpager.adapter = adapter
 
 
     }
-
-    fun setupBottomNav(){
+    private fun setupBottomNav(){
         binding.apply {
             mainViewpager.apply {
                 bottomNavigationView.setOnItemSelectedListener{
@@ -49,7 +53,7 @@ class BottomNavActivity : AppCompatActivity() {
 
         }
     }
-    fun setupViewPager(){
+    private fun setupViewPager(){
         binding.apply {
             mainViewpager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
                 override fun onPageSelected(position: Int) {
@@ -61,6 +65,4 @@ class BottomNavActivity : AppCompatActivity() {
             })
         }
     }
-
-
 }

@@ -16,7 +16,6 @@
         android:theme="@style/Theme.DemoProject1"
         tools:targetApi="31">
 
-
         <activity
             android:name=".activitites.BottomNavActivity"
             android:exported="true">

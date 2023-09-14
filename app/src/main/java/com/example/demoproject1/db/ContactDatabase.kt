@@ -14,8 +14,6 @@ import javax.inject.Singleton
     entities = [Contact::class],
     version = 1
 )
-
  abstract class ContactDatabase : RoomDatabase() {
-
     abstract fun getContactDao(): ContactDao
 }

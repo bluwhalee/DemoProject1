@@ -6,6 +6,7 @@ import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
@@ -17,24 +18,39 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ThirdFragment : Fragment() {
 
+    // region properties
     private lateinit var binding: FragmentThirdBinding
+    private lateinit var galleryLauncher : ActivityResultLauncher<String>
 
-
+    // region lifecycle
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
+
+        binding = FragmentThirdBinding.inflate(layoutInflater)
+        init()
+        return binding.root
+    }
+
+    // region private methods
+    private fun init(){
+        setupGallaryActivity()
+        setupOnClicks()
+    }
+
+    private fun setupGallaryActivity(){
+         galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
             val galleryUri = it
             try{
                 binding.ivUpload.setImageURI(galleryUri)
             }catch(e:Exception){
                 e.printStackTrace()
             }
-
         }
-        binding = FragmentThirdBinding.inflate(layoutInflater)
+    }
+    private fun setupOnClicks(){
         binding.apply {
             btnUpdate.setOnClickListener{
                 galleryLauncher.launch("image/*")
@@ -49,8 +65,6 @@ class ThirdFragment : Fragment() {
                 downloadManager.enqueue(request)
             }
         }
-
-        return binding.root
     }
 
 }

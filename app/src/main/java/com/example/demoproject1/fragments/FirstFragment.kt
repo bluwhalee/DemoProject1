@@ -25,51 +25,39 @@ class FirstFragment : Fragment() {
     // end region
 
     // region lifecycle
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-    // end region
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_first, container, false)
-        init()
-        setRecycler(view)
+        init(view)
         return view
     }
 
     // region private methods
-    private fun init(){
+    private fun init(view: View){
         mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
         paggingAdapter = NewsPagingAdapter()
+        setRecycler(view)
+        observeNewsList()
     }
     private fun setRecycler(view: View){
         recyclerView = view.findViewById<RecyclerView>(R.id.news_recyclerview)
-
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             recyclerView.setHasFixedSize(true)
             adapter = paggingAdapter
         }
-
+        // observe each live data in separate methods
+    }
+    private fun observeNewsList()
+    {
         mainViewModel.list.observe(viewLifecycleOwner, Observer {
             it?.let {
                 paggingAdapter.submitData(lifecycle, it)
             }
-
         })
-        // observe each live data in separate methods
     }
 
     // end region
