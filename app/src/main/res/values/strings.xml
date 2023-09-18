@@ -10,4 +10,5 @@
     <string name="add">Add</string>
     <string name="pick_image">Pick image</string>
     <string name="enter_url">Enter Url</string>
+    <string name="add_contact">Add</string>
 </resources>

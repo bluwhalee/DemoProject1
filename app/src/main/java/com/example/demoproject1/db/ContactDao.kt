@@ -6,8 +6,6 @@ import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
 import com.example.demoproject1.models.Contact
-import kotlinx.coroutines.flow.Flow
-
 @Dao
 interface ContactDao {
 

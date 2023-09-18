@@ -8,6 +8,6 @@ import retrofit2.http.Query
 
 interface NewsApi {
 
-    @GET(Constants.NEWS_ENDPOINT)
-    suspend fun getNews(@Query("page") page: Int): News
+    @GET(Constants.APIConstant.NEWS_ENDPOINT)
+    suspend fun getNews(@Query(Constants.APIConstant.PAGE) page: Int): News
 }

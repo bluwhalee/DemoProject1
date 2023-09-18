@@ -12,16 +12,13 @@ class PagerAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle
 ): FragmentStateAdapter(fragmentManager,lifecycle) {
+
+    private val fragmentList = listOf<Fragment>(FirstFragment(), SecondFragment(), ThirdFragment())
     override fun getItemCount(): Int {
-        return 3
+        return fragmentList.size
     }
 
     override fun createFragment(position: Int): Fragment {
-        return when(position){
-            0-> FirstFragment()
-            1-> SecondFragment()
-            2-> ThirdFragment()
-            else-> FirstFragment()
-        }
+        return fragmentList[position]
     }
 }

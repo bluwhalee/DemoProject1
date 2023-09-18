@@ -16,12 +16,7 @@ import com.example.demoproject1.models.News
 class NewsViewHolder (private val binding: NewsItemBinding): RecyclerView.ViewHolder(binding.root){
 
     fun bind(article: Article?){
-        binding.apply {
-            this@apply.article = article
-            newsTitle.text = article?.title
-            newsDescription.text = article?.description
-        }
-
+        binding.article =article
     }
 
     companion object{

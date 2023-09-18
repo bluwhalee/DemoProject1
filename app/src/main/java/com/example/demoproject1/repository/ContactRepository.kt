@@ -12,7 +12,7 @@ class ContactRepository @Inject constructor (
     private val contactDatabase: ContactDatabase
 ) {
 
-    val allContacts: LiveData<List<Contact>> = contactDatabase.getContactDao().getContacts()
+    fun getAllContacts() = contactDatabase.getContactDao().getContacts()
     suspend fun insert(contact: Contact)
     {
         contactDatabase.getContactDao().upsertContact(contact)

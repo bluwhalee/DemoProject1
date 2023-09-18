@@ -1,6 +1,7 @@
 package com.example.demoproject1.viewmodel
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -19,13 +20,8 @@ class MainViewModel @Inject constructor(
     private val newsRepository: NewsRepository,
     private val contactRepository: ContactRepository
 ) : ViewModel() {
-    val list = newsRepository.getNews().cachedIn(viewModelScope)
-
-    val allContacts: LiveData<List<Contact>>
-
-    init {
-        allContacts = contactRepository.allContacts
-    }
+    fun getNews() = newsRepository.getNews().cachedIn(viewModelScope)
+    fun getAllContacts() = contactRepository.getAllContacts()
 
     fun delete(contact: Contact) = viewModelScope.launch(Dispatchers.IO) {
         contactRepository.delete(contact)

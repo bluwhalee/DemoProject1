@@ -3,9 +3,10 @@ package com.example.demoproject1.di
 import android.content.Context
 import androidx.room.Room
 import androidx.transition.Visibility.Mode
+import com.example.demoproject1.BuildConfig
 import com.example.demoproject1.db.ContactDatabase
 import com.example.demoproject1.retrofit.NewsApi
-import com.example.demoproject1.utils.Constants.BASE_URl
+import com.example.demoproject1.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,7 +24,8 @@ object NetworkModule {
     @Singleton
     @Provides
     fun getRetrofit():Retrofit{
-        return Retrofit.Builder().baseUrl(BASE_URl)
+        // add to gradle file
+        return Retrofit.Builder().baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -38,7 +40,7 @@ object NetworkModule {
         return Room.databaseBuilder(
             appContext,
             ContactDatabase::class.java,
-            "contact-database"
+            Constants.DatabaseConstants.DB_NAME
         ).build()
     }
 }

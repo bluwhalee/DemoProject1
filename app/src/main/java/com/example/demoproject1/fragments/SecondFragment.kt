@@ -20,20 +20,18 @@ import com.example.demoproject1.databinding.FragmentSecondBinding
 import com.example.demoproject1.models.Contact
 import com.example.demoproject1.adapters.ContactAdapter
 import com.example.demoproject1.interfaces.ContactItemClickListener
+import com.example.demoproject1.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SecondFragment : Fragment() , ContactItemClickListener {
 
     // region properties
-    lateinit var binding: FragmentSecondBinding
-    lateinit var dialogBinding: ContactDialogBinding
-    lateinit var viewModel: MainViewModel
-    lateinit var dialog: Dialog
-    lateinit var recyclerAdapter: ContactAdapter
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var binding: FragmentSecondBinding
+    private lateinit var dialogBinding: ContactDialogBinding
+    private lateinit var viewModel: MainViewModel
+    private lateinit var dialog: Dialog
+    private lateinit var recyclerAdapter: ContactAdapter
 
     // region lifecycle
     override fun onCreateView(
@@ -42,6 +40,7 @@ class SecondFragment : Fragment() , ContactItemClickListener {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentSecondBinding.inflate(layoutInflater)
+        dialogBinding = ContactDialogBinding.inflate(layoutInflater)
         init()
         return binding.root
     }
@@ -49,53 +48,63 @@ class SecondFragment : Fragment() , ContactItemClickListener {
     // region private methods
     private fun init(){
         setRecyclerView()
-        setViewModel(recyclerAdapter)
+        setViewModel()
+        setAllContactObserver()
+        setFAB()
+    }
+    private fun setFAB(){
         binding.contactFAB.setOnClickListener{
-            setDialog()
+            popDialog()
         }
     }
     private fun setRecyclerView(){
-        recyclerAdapter = ContactAdapter(requireContext(), this)
+        recyclerAdapter = ContactAdapter(this)
         binding.contactRecyclerview.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = recyclerAdapter
         }
     }
-    private fun setViewModel(recyclerAdapter : ContactAdapter) {
+    private fun setViewModel() {
+        //TODO(separation and remove dependency)
        viewModel = ViewModelProvider(
            requireActivity()
-        ).get(MainViewModel::class.java)
-        viewModel.allContacts.observe(viewLifecycleOwner, Observer {list->
+       )[MainViewModel::class.java]
+    }
+
+    private fun setAllContactObserver(){
+        viewModel.getAllContacts().observe(viewLifecycleOwner, Observer {list->
             list?.let{
                 recyclerAdapter.updateList(it)
             }
         })
     }
-    private fun setDialog(){
-        dialog = Dialog(requireContext())
-        dialog.apply {
-            requestWindowFeature(Window.FEATURE_NO_TITLE)
-            setContentView(R.layout.contact_dialog)
-            findViewById<Button>(R.id.btn_save).setOnClickListener{
-                var firstName = findViewById<EditText>(R.id.edt_first_name).text.toString()
-                var lastName = findViewById<EditText>(R.id.edt_last_name).text.toString()
-                var phoneNumber = findViewById<EditText>(R.id.edt_phone_number).text.toString()
+    private fun popDialog(){
+        //TODO(apply view/databinding)
+        context?.let {parentContext->
+            dialog = Dialog(parentContext)
+            dialog.apply {
+                requestWindowFeature(Window.FEATURE_NO_TITLE)
+                setContentView(dialogBinding.root)
+                dialogBinding.btnSave.setOnClickListener{
+                    val firstName = dialogBinding.edtFirstName.text.toString()
+                    val lastName = dialogBinding.edtLastName.text.toString()
+                    val phoneNumber = dialogBinding.edtPhoneNumber.text.toString()
 
-                if (firstName!="" || lastName!="" || phoneNumber!="")
-                {
-                    var contact = Contact(0, firstName, lastName, phoneNumber)
-                    viewModel.addContact(contact)
+                    // early return
+                    if (firstName.isEmpty() || lastName.isEmpty() || phoneNumber.isEmpty()){
+                        // string resource
+                        Toast.makeText(parentContext, Constants.random.empty_fields, Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+                    viewModel.addContact(Contact(0, firstName, lastName, phoneNumber))
                     dismiss()
                 }
-                else{
-                    Toast.makeText(requireContext(), "Field(s) Empty", Toast.LENGTH_SHORT).show()
+                dialogBinding.btnCancel.setOnClickListener{
+                    dismiss()
                 }
-            }
-            findViewById<Button>(R.id.btn_cancel).setOnClickListener{
-                dismiss()
-            }
 
-            show()
+                show()
+            }
         }
     }
 

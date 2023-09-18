@@ -11,7 +11,7 @@ import com.example.demoproject1.databinding.ItemContactBinding
 import com.example.demoproject1.models.Contact
 import com.example.demoproject1.viewHolders.ContactViewHolder
 
-class ContactAdapter (val context: Context, private val listener: ContactItemClickListener): RecyclerView.Adapter<ContactViewHolder>(){
+class ContactAdapter (private val listener: ContactItemClickListener): RecyclerView.Adapter<ContactViewHolder>(){
 
     // region properties
     private val allContact = ArrayList<Contact>()

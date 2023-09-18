@@ -7,6 +7,23 @@ import java.util.Properties
 
 
 object Constants {
-    const val BASE_URl = "https://newsapi.org/"
-    const val NEWS_ENDPOINT = "v2/top-headlines?apiKey=${BuildConfig.key}&country=us"
+    object APIConstant{
+        const val NEWS_ENDPOINT = "v2/top-headlines?apiKey=${BuildConfig.key}&country=us"
+        const val PAGE = "page"
+    }
+
+    object DatabaseConstants{
+        const val DB_NAME = "contact-database"
+
+    }
+    object gallery {
+        const val imageType = "image/*"
+    }
+
+    object numbers {
+        const val one =1
+    }
+    object random {
+        const val empty_fields = "Field(s) Empty"
+    }
 }
